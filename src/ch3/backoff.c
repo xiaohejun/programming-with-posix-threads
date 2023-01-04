@@ -4,9 +4,9 @@
 #define ITERATIONS 10
 
 pthread_mutex_t mutex[3] = {
-    PTHREAD_MUTEX_DEFAULT,
-    PTHREAD_MUTEX_DEFAULT,
-    PTHREAD_MUTEX_DEFAULT,
+    PTHREAD_MUTEX_INITIALIZER,
+    PTHREAD_MUTEX_INITIALIZER,
+    PTHREAD_MUTEX_INITIALIZER,
 };
 
 int backoff = 1; // backoff or deadlock
