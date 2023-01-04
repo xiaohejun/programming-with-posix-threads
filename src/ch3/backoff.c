@@ -34,7 +34,7 @@ void *lock_forward(void *arg)
                 }
                 if (status == EBUSY) {
                     backoffs++;
-                    printf("forward locker backing off at %d]\n", i);
+                    printf("[forward locker backing off at %d]\n", i);
                     // 尝试锁失败，把自己已经获得的锁给打开
                     for (; i >= 0; --i) {
                         status = pthread_mutex_unlock(&mutex[i]);
@@ -87,7 +87,7 @@ void *lock_backward(void *arg)
                 }
                 if (status == EBUSY) {
                     backoffs++;
-                    printf("forward locker backing off at %d]\n", i);
+                    printf("[backward locker backing off at %d]\n", i);
                     // 尝试锁失败，把自己已经获得的锁给打开
                     for (; i < 3; ++i) {
                         status = pthread_mutex_unlock(&mutex[i]);
@@ -122,9 +122,15 @@ void *lock_backward(void *arg)
 int main(int argc, char *argv[])
 {
     pthread_t forward, backward;
+    if (argc > 1) {
+        backoff = atoi(argv[1]);
+    }
+
     if (argc > 2) {
         yield_flag = atoi(argv[2]);
     }
+
+    printf("backoff: %d, yield: %d\n", backoff, yield_flag);
 
     int status = pthread_create(&forward, NULL, lock_forward, NULL);
     err_abort_if(status != 0, status, "Create forward");
