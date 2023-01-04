@@ -1,0 +1,1 @@
+ADD_EXECUTABLE(life_cycle life_cycle.c)
